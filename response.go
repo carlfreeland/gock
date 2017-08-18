@@ -72,6 +72,18 @@ func (r *Response) Type(kind string) *Response {
 	return r
 }
 
+// AddCookie adds one cookie to the response
+func (r *Response) AddCookie(cookie *http.Cookie) *Response {
+	r.Cookies = append(r.Cookies, cookie)
+	return r
+}
+
+// SetCookies assigns the entire set of cookies to the response
+func (r *Response) SetCookies(cookies []*http.Cookie) *Response {
+	r.Cookies = cookies
+	return r
+}
+
 // SetHeader sets a new header field in the mock response.
 func (r *Response) SetHeader(key, value string) *Response {
 	r.Header.Set(key, value)

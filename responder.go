@@ -36,6 +36,14 @@ func Responder(req *http.Request, mock *Response, res *http.Response) (*http.Res
 	// Define headers by merging fields
 	res.Header = mergeHeaders(res, mock)
 
+	if len(mock.Cookies) > 0 {
+		for _, cookie := range mock.Cookies {
+			if v := cookie.String(); v != "" {
+				res.Header.Add("Set-Cookie", cookie.String())
+			}
+		}
+	}
+
 	// Define mock body, if present
 	if len(mock.BodyBuffer) > 0 {
 		res.ContentLength = int64(len(mock.BodyBuffer))
